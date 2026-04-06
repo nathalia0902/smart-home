@@ -8,4 +8,4 @@ public:
     float valor;
 };
 
-#endif#ifndef SENSOR_H
+#endif
