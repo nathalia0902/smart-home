@@ -2,8 +2,7 @@
 
 ## Sobre o Projeto
 
-Este projeto está em desenvolvimento para a disciplina de Sistemas Distribuídos com o objetivo de implementar comunicação entre processos utilizando Sockets e Streams, aplicados a um cenário de Smart Home.
-
+Este projeto está em desenvolvimento para a disciplina de Sistemas Distribuídos com o objetivo de implementar comunicação entre processos utilizando Sockets e Streams, aplicados a um cenário de automação residencial.
 A aplicação simula um sistema de automação residencial onde sensores e dispositivos trocam informações através de streams personalizados.
 
 ---
