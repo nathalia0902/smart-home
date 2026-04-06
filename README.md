@@ -103,7 +103,7 @@ O projeto implementa comunicação cliente-servidor:
 ### 1. Compilar o projeto
 
 ```bash
-g++ main.cpp -o smart_home
+g++ src/main.cpp -o smart_home
 ```
 
 ### 2. Executar
