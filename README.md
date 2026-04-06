@@ -1,4 +1,4 @@
-# 🏠 Smart Home - (ESP32 + C++)
+# 🏠 Smart Home
 
 ## Sobre o Projeto
 
