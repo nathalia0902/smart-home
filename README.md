@@ -89,6 +89,72 @@ Classe responsável por ler dados enviados via stream.
 
 ---
 
+## 🌐 Comunicação TCP (Cliente-Servidor)
+
+O sistema implementa comunicação entre processos utilizando o modelo **cliente-servidor com sockets TCP**.
+
+### Funcionamento:
+
+* Os dados são enviados via socket TCP
+* O **servidor** recebe os bytes através do socket
+* Os dados são desserializados utilizando o `SensorInputStream`
+* Os objetos são reconstruídos e processados pelo sistema
+
+### Fluxo da comunicação:
+
+1. Cliente empacota os dados (serialização)
+2. Cliente envia os dados via TCP
+3. Servidor recebe os dados
+4. Servidor desempacota (desserialização)
+5. Servidor processa as informações
+
+### Tecnologias utilizadas:
+
+* Sockets TCP (`socket`, `connect`, `accept`, `send`, `read`)
+* Streams customizados para envio e leitura de dados
+
+---
+
+## 📡 Comunicação UDP (Alertas em Tempo Real)
+
+Além do TCP, o sistema utiliza **UDP** para envio de mensagens rápidas, simulando notificações em um ambiente Smart Home.
+
+### Funcionamento:
+
+* Um servidor UDP envia mensagens (alertas)
+* Um ou mais clientes UDP recebem essas mensagens
+* Comunicação sem necessidade de conexão prévia
+
+### Exemplos de alertas:
+
+* "Temperatura alta!"
+* "Ambiente escuro!"
+* "Movimento detectado!"
+
+### Características do UDP:
+
+* Comunicação rápida e leve
+* Não garante entrega dos dados
+* Ideal para notificações em tempo real
+
+---
+
+## 🔄 Serialização de Dados
+
+Para permitir a comunicação entre processos, os dados são convertidos para um formato transmissível.
+
+### Serialização:
+
+* Conversão de objetos em sequência de bytes
+* Implementada manualmente no `SensorOutputStream`
+
+### Desserialização:
+
+* Reconstrução dos objetos a partir dos bytes recebidos
+* Implementada no `SensorInputStream`
+
+---
+
 ## Como Executar
 
 ### 1. Compilar o projeto
