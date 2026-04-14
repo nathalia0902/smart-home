@@ -89,7 +89,7 @@ Classe responsável por ler dados enviados via stream.
 
 ---
 
-## 🌐 Comunicação TCP (Cliente-Servidor)
+## Comunicação TCP (Cliente-Servidor)
 
 O sistema implementa comunicação entre processos utilizando o modelo **cliente-servidor com sockets TCP**.
 
@@ -115,7 +115,7 @@ O sistema implementa comunicação entre processos utilizando o modelo **cliente
 
 ---
 
-## 📡 Comunicação UDP (Alertas em Tempo Real)
+## Comunicação UDP (Alertas em Tempo Real)
 
 Além do TCP, o sistema utiliza **UDP** para envio de mensagens rápidas, simulando notificações em um ambiente Smart Home.
 
@@ -139,7 +139,7 @@ Além do TCP, o sistema utiliza **UDP** para envio de mensagens rápidas, simula
 
 ---
 
-## 🔄 Serialização de Dados
+## Serialização de Dados
 
 Para permitir a comunicação entre processos, os dados são convertidos para um formato transmissível.
 
