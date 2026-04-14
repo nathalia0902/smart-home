@@ -35,8 +35,8 @@ Monitoramento e Controle de Dispositivos Inteligentes, incluindo:
 As classes POJO representam os dados do sistema:
 
 * `Sensor`
-* `Dispositivo`
 * `Ambiente`
+* `Leitura`
 
 Essas classes armazenam apenas atributos, sem lógica de negócio.
 
@@ -47,7 +47,7 @@ Essas classes armazenam apenas atributos, sem lógica de negócio.
 Responsáveis pela lógica do sistema:
 
 * `SensorService`
-* `DispositivoService`
+* `MonitoramentoService`
 
 ---
 
@@ -89,12 +89,69 @@ Classe responsável por ler dados enviados via stream.
 
 ---
 
-## Comunicação TCP
+## Comunicação TCP (Cliente-Servidor)
 
-O projeto implementa comunicação cliente-servidor:
+O sistema implementa comunicação entre processos utilizando o modelo **cliente-servidor com sockets TCP**.
 
-* Cliente envia dados dos sensores
-* Servidor recebe e interpreta os dados
+### Funcionamento:
+
+* Os dados são enviados via socket TCP
+* O **servidor** recebe os bytes através do socket
+* Os dados são desserializados utilizando o `SensorInputStream`
+* Os objetos são reconstruídos e processados pelo sistema
+
+### Fluxo da comunicação:
+
+1. Cliente empacota os dados (serialização)
+2. Cliente envia os dados via TCP
+3. Servidor recebe os dados
+4. Servidor desempacota (desserialização)
+5. Servidor processa as informações
+
+### Tecnologias utilizadas:
+
+* Sockets TCP (`socket`, `connect`, `accept`, `send`, `read`)
+* Streams customizados para envio e leitura de dados
+
+---
+
+## Comunicação UDP (Alertas em Tempo Real)
+
+Além do TCP, o sistema utiliza **UDP** para envio de mensagens rápidas, simulando notificações em um ambiente Smart Home.
+
+### Funcionamento:
+
+* Um servidor UDP envia mensagens (alertas)
+* Um ou mais clientes UDP recebem essas mensagens
+* Comunicação sem necessidade de conexão prévia
+
+### Exemplos de alertas:
+
+* "Temperatura alta!"
+* "Ambiente escuro!"
+* "Movimento detectado!"
+
+### Características do UDP:
+
+* Comunicação rápida e leve
+* Não garante entrega dos dados
+* Ideal para notificações em tempo real
+
+---
+
+## Serialização de Dados
+
+Para permitir a comunicação entre processos, os dados são convertidos para um formato transmissível.
+
+### Serialização:
+
+* Conversão de objetos em sequência de bytes
+* Implementada manualmente no `SensorOutputStream`
+
+### Desserialização:
+
+* Reconstrução dos objetos a partir dos bytes recebidos
+* Implementada no `SensorInputStream`
 
 ---
 
@@ -114,58 +171,9 @@ g++ src/main.cpp -o smart_home
 
 ---
 
-## Exemplos de Teste
-
-* Envio de dados para o terminal
-* Escrita e leitura em arquivos binários
-* Comunicação entre cliente e servidor via socket
-
----
-
-## Integração com ESP32
-
-O sistema pode ser expandido para rodar na ESP32 utilizando:
-
-* WiFi (WiFiClient / WiFiServer)
-* Leitura de sensores reais
-* Controle de dispositivos físicos
-
----
-
-## Objetivo Acadêmico
-
-Este projeto atende aos requisitos do trabalho:
-
-✔ Definição de serviço remoto
-✔ Criação de classes POJO
-✔ Implementação de OutputStream customizado
-✔ Implementação de InputStream customizado
-✔ Testes com:
-
-* Console
-* Arquivo
-* TCP
-
----
-
 ## Autores
 
 * Maria Eduarda Almeida Rodrigues
 * Nathalia de Oliveira Lima
-
----
-
-## Observações
-
-Este projeto tem fins acadêmicos e pode ser expandido para aplicações reais de IoT e automação residencial.
-
----
-
-## Melhorias Futuras
-
-* Integração completa com ESP32
-* Interface web para monitoramento
-* Uso de JSON para serialização
-* Dashboard com análise de dados
 
 ---
