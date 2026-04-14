@@ -35,8 +35,8 @@ Monitoramento e Controle de Dispositivos Inteligentes, incluindo:
 As classes POJO representam os dados do sistema:
 
 * `Sensor`
-* `Dispositivo`
 * `Ambiente`
+* `Leitura`
 
 Essas classes armazenam apenas atributos, sem lógica de negócio.
 
@@ -47,7 +47,7 @@ Essas classes armazenam apenas atributos, sem lógica de negócio.
 Responsáveis pela lógica do sistema:
 
 * `SensorService`
-* `DispositivoService`
+* `MonitoramentoService`
 
 ---
 
@@ -89,15 +89,6 @@ Classe responsável por ler dados enviados via stream.
 
 ---
 
-## Comunicação TCP
-
-O projeto implementa comunicação cliente-servidor:
-
-* Cliente envia dados dos sensores
-* Servidor recebe e interpreta os dados
-
----
-
 ## Como Executar
 
 ### 1. Compilar o projeto
@@ -114,58 +105,9 @@ g++ src/main.cpp -o smart_home
 
 ---
 
-## Exemplos de Teste
-
-* Envio de dados para o terminal
-* Escrita e leitura em arquivos binários
-* Comunicação entre cliente e servidor via socket
-
----
-
-## Integração com ESP32
-
-O sistema pode ser expandido para rodar na ESP32 utilizando:
-
-* WiFi (WiFiClient / WiFiServer)
-* Leitura de sensores reais
-* Controle de dispositivos físicos
-
----
-
-## Objetivo Acadêmico
-
-Este projeto atende aos requisitos do trabalho:
-
-✔ Definição de serviço remoto
-✔ Criação de classes POJO
-✔ Implementação de OutputStream customizado
-✔ Implementação de InputStream customizado
-✔ Testes com:
-
-* Console
-* Arquivo
-* TCP
-
----
-
 ## Autores
 
 * Maria Eduarda Almeida Rodrigues
 * Nathalia de Oliveira Lima
-
----
-
-## Observações
-
-Este projeto tem fins acadêmicos e pode ser expandido para aplicações reais de IoT e automação residencial.
-
----
-
-## Melhorias Futuras
-
-* Integração completa com ESP32
-* Interface web para monitoramento
-* Uso de JSON para serialização
-* Dashboard com análise de dados
 
 ---
