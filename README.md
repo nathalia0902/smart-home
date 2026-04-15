@@ -91,27 +91,49 @@ Classe responsável por ler dados enviados via stream.
 
 ## Comunicação TCP (Cliente-Servidor)
 
-O sistema implementa comunicação entre processos utilizando o modelo **cliente-servidor com sockets TCP**.
+O sistema implementa comunicação entre processos utilizando o modelo cliente-servidor com sockets TCP, com foco no envio estruturado de dados dos sensores.
 
 ### Funcionamento:
 
-* Os dados são enviados via socket TCP
-* O **servidor** recebe os bytes através do socket
-* Os dados são desserializados utilizando o `SensorInputStream`
-* Os objetos são reconstruídos e processados pelo sistema
+* O cliente coleta dados dos sensores e realiza a **serialização manual** dos objetos `Sensor`
+* Os dados são enviados como sequência de bytes através do socket TCP
+* O servidor recebe esses bytes diretamente do socket
+* Os dados são **desserializados**, reconstruindo os objetos `Sensor`
+* Os dados reconstruídos são processados pelo sistema de monitoramento
+
+---
+
+### Integração com Streams
+
+A serialização segue o mesmo padrão definido nos streams personalizados:
+
+* O formato de envio implementado em `SensorOutputStream` foi reutilizado na comunicação TCP
+* O processo de leitura segue a mesma lógica de `SensorInputStream`
+
+Essa abordagem garante consistência entre:
+
+* Escrita em arquivos
+* Comunicação via rede
+* Estrutura dos dados transmitidos
+
+---
 
 ### Fluxo da comunicação:
 
-1. Cliente empacota os dados (serialização)
-2. Cliente envia os dados via TCP
-3. Servidor recebe os dados
-4. Servidor desempacota (desserialização)
-5. Servidor processa as informações
+1. Cliente cria objetos `Sensor`
+2. Cliente serializa os dados (id, tipo, valor, quantidade)
+3. Cliente envia os bytes via socket TCP
+4. Servidor recebe os dados via `read()`
+5. Servidor desserializa os dados reconstruindo os objetos
+6. Servidor processa os sensores (ex: geração de alertas)
+
+---
 
 ### Tecnologias utilizadas:
 
-* Sockets TCP (`socket`, `connect`, `accept`, `send`, `read`)
-* Streams customizados para envio e leitura de dados
+* Sockets TCP (`socket`, `connect`, `accept`, `read`, `write`)
+* Serialização manual de dados
+* Reutilização do padrão de streams personalizados
 
 ---
 
