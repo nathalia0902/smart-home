@@ -1,0 +1,4 @@
+/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/server.dir
+/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/client.dir
+/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/edit_cache.dir
+/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/rebuild_cache.dir
