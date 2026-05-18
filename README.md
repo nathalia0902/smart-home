@@ -1,4 +1,3 @@
-````md
 # 🏠 Smart Home RMI
 
 ## 📖 Sobre o Projeto
