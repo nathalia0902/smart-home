@@ -1,6 +1,6 @@
 # 🏠 Smart Home RMI
 
-## 📖 Sobre o Projeto
+## Sobre o Projeto
 
 Este projeto foi desenvolvido para a disciplina de Sistemas Distribuídos com o objetivo de implementar comunicação distribuída utilizando Remote Method Invocation (RMI) em C++.
 
@@ -8,7 +8,7 @@ A aplicação simula um sistema de automação residencial onde sensores e dispo
 
 ---
 
-# 📌 Trabalho 1 — Comunicação entre Processos
+# Trabalho 1 — Comunicação entre Processos
 
 Na primeira etapa do projeto foi implementada a comunicação entre processos utilizando:
 
@@ -22,7 +22,7 @@ Os objetos eram convertidos manualmente em bytes utilizando streams personalizad
 
 ---
 
-# 📌 Trabalho 2 — Remote Method Invocation (RMI)
+# Trabalho 2 — Remote Method Invocation (RMI)
 
 Na segunda etapa do projeto o sistema foi reestruturado utilizando o modelo Remote Method Invocation (RMI).
 
@@ -39,7 +39,7 @@ A comunicação segue o modelo requisição-resposta.
 
 ---
 
-# 🚀 Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 - C++
 - Programação Orientada a Objetos (POO)
@@ -52,7 +52,7 @@ A comunicação segue o modelo requisição-resposta.
 
 ---
 
-# 🧠 Conceitos Implementados
+# Conceitos Implementados
 
 ## Remote Method Invocation (RMI)
 
@@ -88,7 +88,7 @@ Implementada utilizando `RemoteObjectRef`, que identifica o objeto remoto atrav�
 
 ---
 
-# 🏗️ Arquitetura do Sistema
+# Arquitetura do Sistema
 
 O sistema foi dividido em módulos:
 
@@ -104,7 +104,7 @@ Cliente
 
 ---
 
-# 📂 Estrutura do Projeto
+# Estrutura do Projeto
 
 ```txt
 smart-home-rmi/
@@ -118,7 +118,7 @@ smart-home-rmi/
 
 ---
 
-# 🧩 Entidades
+# Entidades
 
 O sistema possui as seguintes entidades:
 
@@ -140,7 +140,7 @@ O sistema possui as seguintes entidades:
 
 ---
 
-# 🌐 Serviço Remoto
+# Serviço Remoto
 
 O sistema implementa um serviço remoto de:
 
@@ -155,7 +155,7 @@ Incluindo:
 
 ---
 
-# ⚙️ Métodos Remotos
+# Métodos Remotos
 
 O sistema implementa os seguintes métodos remotos:
 
@@ -166,7 +166,7 @@ O sistema implementa os seguintes métodos remotos:
 
 ---
 
-# 🔄 Protocolo Requisição-Resposta
+# Protocolo Requisição-Resposta
 
 A comunicação entre cliente e servidor segue o modelo requisição-resposta.
 
@@ -193,7 +193,7 @@ A comunicação entre cliente e servidor segue o modelo requisição-resposta.
 
 ---
 
-# 🧱 Componentes do Middleware RMI
+# Componentes do Middleware RMI
 
 ## Proxy
 
@@ -219,7 +219,7 @@ Desempacota a requisição, identifica o método remoto e executa o serviço cor
 
 ---
 
-# 📦 Serialização de Dados
+# Serialização de Dados
 
 A serialização foi implementada utilizando JSON.
 
@@ -227,7 +227,7 @@ Os dados dos métodos remotos são convertidos em mensagens transmissíveis pela
 
 ---
 
-# ▶️ Como Compilar
+# Como Compilar
 
 ```bash
 mkdir build
@@ -238,7 +238,7 @@ make
 
 ---
 
-# ▶️ Como Executar
+# Como Executar
 
 ## Servidor
 
@@ -254,7 +254,7 @@ make
 
 ---
 
-# 📌 Exemplo de Execução
+# Exemplo de Execução
 
 ```txt
 ==== SMART HOME CLIENT ====
@@ -267,7 +267,7 @@ Brightness set to: 80
 
 ---
 
-# 👩‍💻 Autoras
+# Autoras
 
 * Maria Eduarda Almeida Rodrigues
 * Nathalia de Oliveira Lima
