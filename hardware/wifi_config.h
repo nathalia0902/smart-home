@@ -1,0 +1,5 @@
+#define WIFI_SSID "SEU_WIFI"
+#define WIFI_PASSWORD "SENHA"
+
+#define MQTT_SERVER "192.168.0.100"
+#define MQTT_PORT 1883

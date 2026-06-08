@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/smart_home_api.dir/link.d CMakeFiles/smart_home_api.dir/server/Server.cpp.o CMakeFiles/smart_home_api.dir/server/SmartHomeApiService.cpp.o -o smart_home_api  -lpthread

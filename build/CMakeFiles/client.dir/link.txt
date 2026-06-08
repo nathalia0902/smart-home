@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/client.dir/client/Client.cpp.o CMakeFiles/client.dir/client/SmartHomeProxy.cpp.o CMakeFiles/client.dir/middleware/Requestor.cpp.o CMakeFiles/client.dir/common/Serializer.cpp.o -o client 

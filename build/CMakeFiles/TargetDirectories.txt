@@ -1,4 +1,3 @@
-/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/server.dir
-/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/client.dir
-/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/edit_cache.dir
-/home/nathalia/Downloads/smart-home-rmi/build/CMakeFiles/rebuild_cache.dir
+/home/eduardarodrigues/Downloads/smart-home-api/build/CMakeFiles/smart_home_api.dir
+/home/eduardarodrigues/Downloads/smart-home-api/build/CMakeFiles/edit_cache.dir
+/home/eduardarodrigues/Downloads/smart-home-api/build/CMakeFiles/rebuild_cache.dir

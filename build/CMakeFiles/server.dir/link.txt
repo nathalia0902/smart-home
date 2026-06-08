@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/server.dir/server/Server.cpp.o CMakeFiles/server.dir/server/Dispatcher.cpp.o CMakeFiles/server.dir/server/SmartHomeServiceImpl.cpp.o CMakeFiles/server.dir/middleware/Invoker.cpp.o CMakeFiles/server.dir/common/Serializer.cpp.o -o server 
