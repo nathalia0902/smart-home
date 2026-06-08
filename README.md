@@ -269,17 +269,7 @@ GET
 
 ---
 
-# 11. Como Demonstramos o Trabalho 3
-
-Um integrante executa o servidor.
-
-Outro integrante executa os clientes.
-
-Assim demonstramos a comunicação cliente-servidor solicitada pelo trabalho.
-
----
-
-# 12. Trabalho 4 – Comunicação Indireta
+# 11. Trabalho 4 – Comunicação Indireta
 
 Neste trabalho evoluímos a arquitetura.
 
@@ -289,7 +279,7 @@ Publish-Subscribe.
 
 ---
 
-# 13. O que é Publish-Subscribe?
+# 12. O que é Publish-Subscribe?
 
 Publish-Subscribe é um modelo onde produtores e consumidores não se comunicam diretamente.
 
@@ -303,7 +293,7 @@ Os consumidores recebem as mensagens do Broker.
 
 ---
 
-# 14. Broker Utilizado
+# 13. Broker Utilizado
 
 Utilizamos o Mosquitto MQTT.
 
@@ -316,7 +306,7 @@ O Mosquitto é responsável por:
 
 ---
 
-# 15. Arquitetura MQTT
+# 14. Arquitetura MQTT
 
 Publicador
 ↓
@@ -326,7 +316,7 @@ Subscriber
 
 ---
 
-# 16. O que é MQTT?
+# 15. O que é MQTT?
 
 MQTT é um protocolo leve muito utilizado em IoT.
 
@@ -340,7 +330,7 @@ smartHome/light
 
 ---
 
-# 17. Publicador
+# 16. Publicador
 
 O publicador gera eventos de sensores.
 
@@ -350,35 +340,8 @@ simulator/mqtt_sensor_simulator.py
 
 ---
 
-# 18. Por que não utilizamos a ESP32 na apresentação?
 
-Durante os testes finais tivemos problemas com a placa ESP32.
-
-Para não comprometer a demonstração, utilizamos um simulador MQTT.
-
-O simulador publica exatamente os mesmos tipos de dados que seriam enviados pela ESP32.
-
-A arquitetura distribuída permanece a mesma.
-
-A única diferença é a origem dos dados.
-
----
-
-# 19. De Onde Vêm os Valores?
-
-Os valores são gerados pelo simulador MQTT.
-
-Exemplo:
-
-Temperatura: 25.8 °C
-
-Luminosidade: 1398 lux
-
-Esses valores são publicados nos tópicos MQTT e consumidos pelos assinantes.
-
----
-
-# 20. Como a ESP32 Funcionaria?
+# 17. Como a ESP32 Funcionaria?
 
 ESP32
 ↓
@@ -394,7 +357,7 @@ O simulador substitui temporariamente apenas a etapa de leitura física.
 
 ---
 
-# 21. Onde Está o Desacoplamento?
+# 18. Onde Está o Desacoplamento?
 
 O publicador não conhece os consumidores.
 
@@ -406,7 +369,7 @@ Essa característica é chamada de desacoplamento espacial.
 
 ---
 
-# 22. Como Demonstramos o Desacoplamento?
+# 19. Como Demonstramos o Desacoplamento?
 
 Executamos:
 
@@ -423,7 +386,7 @@ Isso demonstra que ele não depende diretamente dos consumidores.
 
 ---
 
-# 23. O que o Broker Resolve?
+# 20. O que o Broker Resolve?
 
 Sem Broker:
 
