@@ -11,239 +11,497 @@
 
 ---
 
-# 1. Visão Geral do Projeto
+# 1. Introdução
 
-O projeto Smart Home simula uma residência inteligente composta por sensores e dispositivos controláveis remotamente.
+O nosso projeto é uma **Smart Home**, ou seja, uma casa inteligente, onde é possível controlar e monitorar dispositivos como lâmpadas, sensores de temperatura e sensores de luminosidade.
 
-A aplicação foi desenvolvida em C++ e evoluiu ao longo dos trabalhos da disciplina.
+Nesta etapa do projeto, apresentamos a implementação do **Trabalho 3**, no qual foi desenvolvida uma **API REST** para realizar a comunicação cliente-servidor.
 
-No Trabalho 3 implementamos um serviço remoto utilizando API REST.
+A ideia geral do projeto é simular uma casa inteligente distribuída, permitindo que clientes externos consigam consultar informações e executar operações remotamente.
 
-No Trabalho 4 evoluímos a arquitetura utilizando comunicação indireta através do padrão Publish-Subscribe com MQTT.
+No sistema, temos dispositivos como lâmpadas e sensores, e os clientes podem realizar operações como:
 
----
+* listar os dispositivos da casa;
+* ligar uma lâmpada;
+* desligar uma lâmpada;
+* alterar o brilho de uma lâmpada;
+* consultar temperatura;
+* consultar luminosidade.
 
-# 2. O que é um Serviço Remoto?
-
-Um serviço remoto é uma funcionalidade executada em outro processo ou computador e acessada através da rede.
-
-Neste projeto, o servidor disponibiliza operações que podem ser acessadas remotamente pelos clientes.
-
-Exemplos:
-
-* Consultar dispositivos.
-* Ligar uma lâmpada.
-* Desligar uma lâmpada.
-* Consultar temperatura.
-
-O cliente envia uma requisição pela rede e o servidor retorna uma resposta.
+Nos trabalhos anteriores, a comunicação era mais direta entre cliente e servidor. No Trabalho 3, essa comunicação foi reimplementada utilizando uma API REST, seguindo o modelo de requisição e resposta.
 
 ---
 
-# 3. O que é uma API REST?
+# 2. Objetivo do Trabalho 3
 
-API REST é uma forma de comunicação cliente-servidor baseada em HTTP.
+O objetivo do Trabalho 3 era reimplementar o serviço remoto utilizando **Web Services ou API**, sem utilizar sockets manualmente e sem utilizar RMI.
 
-Utilizamos:
+Para isso, foi criada uma API REST em **C++**.
 
-* Requisições HTTP.
-* Respostas em JSON.
-* Endpoints REST.
+A API REST funciona seguindo o modelo de **requisição e resposta**. Um cliente faz uma requisição HTTP para uma rota específica do servidor, o servidor processa essa requisição e retorna uma resposta, normalmente em formato JSON.
+
+No nosso projeto, o servidor foi implementado em C++ utilizando:
+
+* `cpp-httplib`, para criação das rotas HTTP;
+* `nlohmann/json`, para manipulação dos dados em JSON.
+
+---
+
+# 3. Conceito de API REST
+
+Uma API REST é uma forma de disponibilizar serviços por meio de rotas HTTP.
+
+Cada rota representa um recurso ou uma operação do sistema.
+
+No nosso projeto, por exemplo, a rota:
+
+```http
+GET /api/devices
+```
+
+é usada para listar os dispositivos cadastrados na Smart Home.
+
+A rota:
+
+```http
+POST /api/devices/1/on
+```
+
+é usada para ligar o dispositivo de ID 1.
+
+Já a rota:
+
+```http
+PUT /api/lamps/1/brightness
+```
+
+é usada para alterar o brilho da lâmpada de ID 1.
+
+O REST utiliza métodos HTTP para indicar a intenção da operação. No nosso projeto, usamos:
+
+* `GET`, para consultar dados;
+* `POST`, para executar ações, como ligar ou desligar dispositivos;
+* `PUT`, para atualizar informações, como o brilho de uma lâmpada.
+
+---
+
+# 4. Arquitetura do Trabalho 3
+
+A arquitetura do Trabalho 3 segue o modelo **cliente-servidor**.
+
+Temos um servidor implementado em **C++**, responsável por expor a API REST.
+
+Também foram implementados dois clientes em linguagens diferentes da linguagem utilizada no servidor:
+
+* cliente em Python;
+* cliente em JavaScript.
+
+Esses clientes fazem requisições HTTP para o servidor e recebem respostas em JSON.
+
+A arquitetura pode ser representada da seguinte forma:
+
+```text
+Cliente Python
+      |
+      | Requisições HTTP
+      v
++----------------+
+|  API REST C++  |
++----------------+
+      ^
+      | Requisições HTTP
+      |
+Cliente JavaScript
+```
+
+A API recebe as requisições, executa os métodos do serviço e retorna as respostas para os clientes.
+
+Essa estrutura atende ao requisito do trabalho, pois o servidor foi implementado em C++ e os clientes foram implementados em duas linguagens diferentes.
+
+---
+
+# 5. Entidades do Sistema
+
+O sistema foi modelado com algumas entidades principais.
+
+## 5.1 Device
+
+A classe `Device` representa um dispositivo genérico da casa inteligente.
+
+Seus principais atributos são:
+
+* `id`;
+* `name`;
+* `status`;
+* `type`.
+
+Essa classe serve como base para outros tipos de dispositivos.
+
+---
+
+## 5.2 Lamp
+
+A classe `Lamp` representa uma lâmpada inteligente.
+
+Ela herda da classe `Device`, representando uma relação do tipo **“é-um”**, pois uma lâmpada é um dispositivo.
+
+Além dos atributos herdados de `Device`, a classe `Lamp` possui o atributo:
+
+* `brightness`.
+
+Esse atributo representa o nível de brilho da lâmpada.
+
+---
+
+## 5.3 Sensor
+
+A classe `Sensor` representa um sensor da casa inteligente.
+
+Ela também herda da classe `Device`, caracterizando outra relação do tipo **“é-um”**, pois um sensor também é um dispositivo.
+
+A classe `Sensor` possui atributos específicos como:
+
+* `temperature`;
+* `unit`.
+
+---
+
+## 5.4 Room
+
+A classe `Room` representa um cômodo da casa.
+
+Um cômodo possui dispositivos associados, o que caracteriza uma relação do tipo **“tem-um”**.
+
+---
+
+## 5.5 SmartHome
+
+A classe `SmartHome` representa a casa inteligente como um todo.
+
+Ela possui uma lista de cômodos, caracterizando outra relação do tipo **“tem-um”**.
+
+---
+
+# 6. Serviços Remotos Implementados
+
+A API implementa vários serviços remotos relacionados ao controle e monitoramento da Smart Home.
+
+## 6.1 Verificar funcionamento da API
+
+```http
+GET /api/health
+```
+
+Essa rota serve para verificar se a API está funcionando.
+
+Ela retorna uma resposta JSON informando que o servidor está ativo.
+
+---
+
+## 6.2 Consultar informações da casa
+
+```http
+GET /api/home
+```
+
+Essa rota retorna informações gerais da Smart Home, como o nome da casa e seus cômodos.
+
+---
+
+## 6.3 Listar dispositivos
+
+```http
+GET /api/devices
+```
+
+Essa rota retorna todos os dispositivos cadastrados no sistema, incluindo lâmpadas e sensores.
+
+---
+
+## 6.4 Buscar dispositivo por ID
+
+```http
+GET /api/devices/{id}
+```
+
+Essa rota retorna as informações de um dispositivo específico a partir do seu ID.
+
+---
+
+## 6.5 Ligar dispositivo
+
+```http
+POST /api/devices/{id}/on
+```
+
+Essa rota liga ou ativa um dispositivo.
+
+Por exemplo:
+
+```http
+POST /api/devices/1/on
+```
+
+liga o dispositivo de ID 1.
+
+---
+
+## 6.6 Desligar dispositivo
+
+```http
+POST /api/devices/{id}/off
+```
+
+Essa rota desliga ou desativa um dispositivo.
+
+Por exemplo:
+
+```http
+POST /api/devices/1/off
+```
+
+desliga o dispositivo de ID 1.
+
+---
+
+## 6.7 Consultar temperatura de um sensor específico
+
+```http
+GET /api/sensors/{id}/temperature
+```
+
+Essa rota consulta a temperatura de um sensor específico.
+
+Por exemplo:
+
+```http
+GET /api/sensors/3/temperature
+```
+
+consulta a temperatura do sensor de ID 3.
+
+---
+
+## 6.8 Alterar brilho de uma lâmpada
+
+```http
+PUT /api/lamps/{id}/brightness
+```
+
+Essa rota altera o brilho de uma lâmpada.
+
+Ela recebe um corpo JSON com o novo valor de brilho.
 
 Exemplo:
 
-GET /api/devices
+```json
+{
+    "brightness": 85
+}
+```
 
-Retorna a lista de dispositivos cadastrados.
-
----
-
-Os métodos disponibilizados remotamente são:
-
-* getHome()
-* listDevices()
-* getDeviceById()
-* turnOn()
-* turnOff()
-* getTemperature()
-* setBrightness()
-
-Esses métodos são acessados através dos endpoints HTTP.
+O valor do brilho deve estar entre 0 e 100.
 
 ---
 
-# 4. Entidades do Sistema
+## 6.9 Consultar temperatura atual
 
-## SmartHome
+```http
+GET /api/sensors/temperature
+```
 
-Representa toda a residência.
+Essa rota retorna a temperatura atual do ambiente.
 
-Possui vários cômodos.
-
----
-
-## Room
-
-Representa um cômodo.
-
-Exemplos:
-
-* Sala
-* Quarto
+Ela foi adicionada para preparar a integração com sensores físicos e com a evolução do Trabalho 4.
 
 ---
 
-## Device
+## 6.10 Consultar luminosidade atual
 
-Classe base para todos os dispositivos.
+```http
+GET /api/sensors/light
+```
 
----
+Essa rota retorna o valor atual de luminosidade.
 
-## Lamp
-
-Representa uma lâmpada inteligente.
-
-Herda de Device.
-
-Possui:
-
-* Status
-* Brilho
+Ela também foi adicionada para preparar a integração com sensores físicos e com a comunicação indireta utilizando MQTT.
 
 ---
 
-## Sensor
+# 7. Demonstração do Trabalho 3
 
-Representa um sensor.
+Para demonstrar o funcionamento do Trabalho 3, primeiro iniciamos o servidor da API.
 
-Herda de Device.
+Dentro da pasta `build`, executamos:
 
-Possui:
+```bash
+./smart_home_api
+```
 
-* Temperatura
-* Unidade de medida
+Quando o servidor inicia, ele mostra uma mensagem indicando que a API está rodando em:
 
----
+```text
+http://localhost:8080/api/health
+```
 
-# 5. Relacionamentos
+Em seguida, podemos abrir no navegador a rota:
 
-## Agregação
+```text
+http://localhost:8080/api/health
+```
 
-Uma SmartHome possui vários Rooms.
+Essa rota retorna um JSON confirmando que a API está funcionando.
 
-Um Room possui vários Devices.
+Também podemos acessar:
 
----
+```text
+http://localhost:8080/api/devices
+```
 
-## Herança
+Essa rota mostra todos os dispositivos cadastrados na Smart Home.
 
-Lamp é um Device.
+Outras rotas que podem ser testadas no navegador são:
 
-Sensor é um Device.
+```text
+http://localhost:8080/api/home
+```
 
----
+```text
+http://localhost:8080/api/sensors/temperature
+```
 
-# 6. Arquitetura do Trabalho 3
-
-Cliente Python
-↓
-API REST (C++)
-↓
-Smart Home
-
-Cliente JavaScript
-↓
-API REST (C++)
-↓
-Smart Home
-
----
-
-# 7. Linguagens Utilizadas
-
-Servidor:
-
-C++
-
-Cliente 1:
-
-Python
-
-Cliente 2:
-
-JavaScript
-
-Assim atendemos ao requisito de possuir pelo menos duas linguagens diferentes da linguagem utilizada pelo serviço.
+```text
+http://localhost:8080/api/sensors/light
+```
 
 ---
 
-# 8. Endpoints Disponíveis
+# 8. Execução dos Clientes
 
-## Verificar API
+Além dos testes pelo navegador, também foram implementados dois clientes para consumir a API.
 
-GET
+## 8.1 Cliente Python
 
-/api/health
+Para executar o cliente Python, usamos:
 
----
+```bash
+python3 clients/python_client.py
+```
 
-## Informações da Casa
+Esse cliente realiza várias chamadas para a API, como:
 
-GET
-
-/api/home
-
----
-
-## Listar Dispositivos
-
-GET
-
-/ api/devices
+* verificar se a API está funcionando;
+* listar dispositivos;
+* ligar uma lâmpada;
+* alterar o brilho da lâmpada;
+* consultar temperatura;
+* consultar luminosidade;
+* desligar a lâmpada.
 
 ---
 
-## Buscar Dispositivo
+## 8.2 Cliente JavaScript
 
-GET
+Para executar o cliente JavaScript, usamos:
 
-/api/devices/{id}
+```bash
+node clients/js_client.js
+```
 
----
+Esse cliente também consome a API REST e exibe as respostas JSON no terminal.
 
-## Ligar Dispositivo
-
-POST
-
-/api/devices/{id}/on
+Com isso, mostramos que o servidor C++ pode ser acessado por clientes em diferentes linguagens de programação.
 
 ---
 
-## Desligar Dispositivo
+# 9. Como Compilar o Projeto
 
-POST
+Na raiz do projeto, execute:
 
-/api/devices/{id}/off
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
 
----
+Após a compilação, será gerado o executável:
 
-## Alterar Brilho
-
-PUT
-
-/api/lamps/{id}/brightness
-
----
-
-## Consultar Temperatura
-
-GET
-
-/api/sensors/{id}/temperature
+```bash
+smart_home_api
+```
 
 ---
 
-# 9. Trabalho 4 – Comunicação Indireta
+# 10. Como Executar o Servidor
+
+Dentro da pasta `build`, execute:
+
+```bash
+./smart_home_api
+```
+
+Se o servidor iniciar corretamente, será exibida uma mensagem semelhante a:
+
+```text
+======================================
+ Smart Home API iniciada com sucesso
+ URL: http://localhost:8080/api/health
+======================================
+```
+
+---
+
+# 11. Testes Rápidos com curl
+
+Também é possível testar a API pelo terminal usando `curl`.
+
+Verificar a API:
+
+```bash
+curl http://localhost:8080/api/health
+```
+
+Listar dispositivos:
+
+```bash
+curl http://localhost:8080/api/devices
+```
+
+Consultar temperatura atual:
+
+```bash
+curl http://localhost:8080/api/sensors/temperature
+```
+
+Consultar luminosidade atual:
+
+```bash
+curl http://localhost:8080/api/sensors/light
+```
+
+Ligar dispositivo:
+
+```bash
+curl -X POST http://localhost:8080/api/devices/1/on
+```
+
+Desligar dispositivo:
+
+```bash
+curl -X POST http://localhost:8080/api/devices/1/off
+```
+
+Alterar brilho:
+
+```bash
+curl -X PUT http://localhost:8080/api/lamps/1/brightness \
+-H "Content-Type: application/json" \
+-d '{"brightness": 85}'
+```
+---
+
+# 12. Trabalho 4 – Comunicação Indireta
 
 Neste trabalho evoluímos a arquitetura.
 
@@ -254,7 +512,7 @@ Com Publish-Subscribe, os sensores apenas publicam dados em tópicos MQTT e o Br
 
 ---
 
-# 10. O que é Publish-Subscribe?
+# 13. O que é Publish-Subscribe?
 
 Publish-Subscribe é um modelo onde produtores e consumidores não se comunicam diretamente.
 
@@ -268,7 +526,7 @@ Os consumidores recebem as mensagens do Broker.
 
 ---
 
-# 11. Broker Utilizado
+# 14. Broker Utilizado
 
 Utilizamos o Mosquitto MQTT.
 
@@ -281,7 +539,7 @@ O Mosquitto é responsável por:
 
 ---
 
-# 12. Arquitetura MQTT
+# 15. Arquitetura MQTT
 
 Publicador
 ↓
@@ -291,7 +549,7 @@ Subscriber
 
 ---
 
-# 13. O que é MQTT?
+# 16. O que é MQTT?
 
 MQTT é um protocolo leve muito utilizado em IoT.
 
@@ -305,7 +563,7 @@ smartHome/light
 
 ---
 
-# 14. Publicador
+# 17. Publicador
 
 O publicador gera eventos de sensores.
 
@@ -316,7 +574,7 @@ simulator/mqtt_sensor_simulator.py
 ---
 
 
-# 15. Como a ESP32 Funcionaria?
+# 18. Como a ESP32 Funcionaria?
 
 ESP32
 ↓
@@ -332,7 +590,7 @@ O simulador substitui temporariamente apenas a etapa de leitura física.
 
 ---
 
-# 16. Como Demonstramos o Desacoplamento?
+# 19. Como Demonstramos o Desacoplamento?
 
 Executamos:
 
