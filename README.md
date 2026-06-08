@@ -332,19 +332,7 @@ O simulador substitui temporariamente apenas a etapa de leitura física.
 
 ---
 
-# 16. Onde Está o Desacoplamento?
-
-O publicador não conhece os consumidores.
-
-Os consumidores não conhecem o publicador.
-
-Ambos conhecem apenas o Broker.
-
-Essa característica é chamada de desacoplamento espacial.
-
----
-
-# 17. Como Demonstramos o Desacoplamento?
+# 16. Como Demonstramos o Desacoplamento?
 
 Executamos:
 
@@ -361,14 +349,3 @@ Isso demonstra que ele não depende diretamente dos consumidores.
 
 ---
 
-# 18. O que o Broker Resolve?
-
-Sem Broker:
-
-Produtor → Consumidor
-
-Com Broker:
-
-Produtor → Broker → Consumidor
-
-O Broker reduz o acoplamento e facilita a escalabilidade.
