@@ -58,16 +58,6 @@ Retorna a lista de dispositivos cadastrados.
 
 ---
 
-# 4. Onde está o Serviço Remoto?
-
-O serviço remoto está implementado no servidor da API.
-
-Arquivos principais:
-
-server/Server.cpp
-
-server/SmartHomeApiService.cpp
-
 Os métodos disponibilizados remotamente são:
 
 * getHome()
@@ -82,23 +72,7 @@ Esses métodos são acessados através dos endpoints HTTP.
 
 ---
 
-# 5. Por que não utilizamos Socket ou RMI?
-
-O requisito do Trabalho 3 era não implementar sockets diretamente nem utilizar RMI.
-
-Neste projeto utilizamos uma biblioteca HTTP pronta.
-
-Não criamos sockets manualmente.
-
-Não utilizamos RPC.
-
-Não utilizamos RMI.
-
-Toda a comunicação foi realizada através da API REST.
-
----
-
-# 6. Entidades do Sistema
+# 4. Entidades do Sistema
 
 ## SmartHome
 
@@ -151,7 +125,7 @@ Possui:
 
 ---
 
-# 7. Relacionamentos
+# 5. Relacionamentos
 
 ## Agregação
 
@@ -169,7 +143,7 @@ Sensor é um Device.
 
 ---
 
-# 8. Arquitetura do Trabalho 3
+# 6. Arquitetura do Trabalho 3
 
 Cliente Python
 ↓
@@ -185,7 +159,7 @@ Smart Home
 
 ---
 
-# 9. Linguagens Utilizadas
+# 7. Linguagens Utilizadas
 
 Servidor:
 
@@ -203,7 +177,7 @@ Assim atendemos ao requisito de possuir pelo menos duas linguagens diferentes da
 
 ---
 
-# 10. Endpoints Disponíveis
+# 8. Endpoints Disponíveis
 
 ## Verificar API
 
@@ -269,7 +243,7 @@ GET
 
 ---
 
-# 11. Trabalho 4 – Comunicação Indireta
+# 9. Trabalho 4 – Comunicação Indireta
 
 Neste trabalho evoluímos a arquitetura.
 
@@ -279,7 +253,7 @@ Publish-Subscribe.
 
 ---
 
-# 12. O que é Publish-Subscribe?
+# 10. O que é Publish-Subscribe?
 
 Publish-Subscribe é um modelo onde produtores e consumidores não se comunicam diretamente.
 
@@ -293,7 +267,7 @@ Os consumidores recebem as mensagens do Broker.
 
 ---
 
-# 13. Broker Utilizado
+# 11. Broker Utilizado
 
 Utilizamos o Mosquitto MQTT.
 
@@ -306,7 +280,7 @@ O Mosquitto é responsável por:
 
 ---
 
-# 14. Arquitetura MQTT
+# 12. Arquitetura MQTT
 
 Publicador
 ↓
@@ -316,7 +290,7 @@ Subscriber
 
 ---
 
-# 15. O que é MQTT?
+# 13. O que é MQTT?
 
 MQTT é um protocolo leve muito utilizado em IoT.
 
@@ -330,7 +304,7 @@ smartHome/light
 
 ---
 
-# 16. Publicador
+# 14. Publicador
 
 O publicador gera eventos de sensores.
 
@@ -341,7 +315,7 @@ simulator/mqtt_sensor_simulator.py
 ---
 
 
-# 17. Como a ESP32 Funcionaria?
+# 15. Como a ESP32 Funcionaria?
 
 ESP32
 ↓
@@ -357,7 +331,7 @@ O simulador substitui temporariamente apenas a etapa de leitura física.
 
 ---
 
-# 18. Onde Está o Desacoplamento?
+# 16. Onde Está o Desacoplamento?
 
 O publicador não conhece os consumidores.
 
@@ -369,7 +343,7 @@ Essa característica é chamada de desacoplamento espacial.
 
 ---
 
-# 19. Como Demonstramos o Desacoplamento?
+# 17. Como Demonstramos o Desacoplamento?
 
 Executamos:
 
@@ -386,7 +360,7 @@ Isso demonstra que ele não depende diretamente dos consumidores.
 
 ---
 
-# 20. O que o Broker Resolve?
+# 18. O que o Broker Resolve?
 
 Sem Broker:
 
