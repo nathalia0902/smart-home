@@ -1,17 +1,17 @@
 # Smart Home API + MQTT
 
-## Disciplina
+## Trabalho 3 – API REST
 
-Sistemas Distribuídos
+## Trabalho 4 – Comunicação Indireta com MQTT
 
-## Integrantes
+### Integrantes
 
-* Nathalia de Oliveira Lima
 * Maria Eduarda Almeida Rodrigues
+* Nathalia de Oliveira Lima
 
 ---
 
-# Visão Geral do Projeto
+# 1. Visão Geral do Projeto
 
 O projeto Smart Home simula uma residência inteligente composta por sensores e dispositivos controláveis remotamente.
 
@@ -23,21 +23,107 @@ No Trabalho 4 evoluímos a arquitetura utilizando comunicação indireta atravé
 
 ---
 
-# Entidades do Sistema
+# 2. O que é um Serviço Remoto?
 
-O sistema possui as seguintes entidades:
+Um serviço remoto é uma funcionalidade executada em outro processo ou computador e acessada através da rede.
+
+Neste projeto, o servidor disponibiliza operações que podem ser acessadas remotamente pelos clientes.
+
+Exemplos:
+
+* Consultar dispositivos.
+* Ligar uma lâmpada.
+* Desligar uma lâmpada.
+* Consultar temperatura.
+
+O cliente envia uma requisição pela rede e o servidor retorna uma resposta.
+
+---
+
+# 3. O que é uma API REST?
+
+API REST é uma forma de comunicação cliente-servidor baseada em HTTP.
+
+Utilizamos:
+
+* Requisições HTTP.
+* Respostas em JSON.
+* Endpoints REST.
+
+Exemplo:
+
+GET /api/devices
+
+Retorna a lista de dispositivos cadastrados.
+
+---
+
+# 4. Onde está o Serviço Remoto?
+
+O serviço remoto está implementado no servidor da API.
+
+Arquivos principais:
+
+server/Server.cpp
+
+server/SmartHomeApiService.cpp
+
+Os métodos disponibilizados remotamente são:
+
+* getHome()
+* listDevices()
+* getDeviceById()
+* turnOn()
+* turnOff()
+* getTemperature()
+* setBrightness()
+
+Esses métodos são acessados através dos endpoints HTTP.
+
+---
+
+# 5. Por que não utilizamos Socket ou RMI?
+
+O requisito do Trabalho 3 era não implementar sockets diretamente nem utilizar RMI.
+
+Neste projeto utilizamos uma biblioteca HTTP pronta.
+
+Não criamos sockets manualmente.
+
+Não utilizamos RPC.
+
+Não utilizamos RMI.
+
+Toda a comunicação foi realizada através da API REST.
+
+---
+
+# 6. Entidades do Sistema
 
 ## SmartHome
 
-Representa toda a residência inteligente.
+Representa toda a residência.
+
+Possui vários cômodos.
+
+---
 
 ## Room
 
-Representa um cômodo da casa.
+Representa um cômodo.
+
+Exemplos:
+
+* Sala
+* Quarto
+
+---
 
 ## Device
 
-Classe base para dispositivos.
+Classe base para todos os dispositivos.
+
+---
 
 ## Lamp
 
@@ -45,21 +131,35 @@ Representa uma lâmpada inteligente.
 
 Herda de Device.
 
-## Sensor
+Possui:
 
-Representa um sensor de temperatura.
-
-Herda de Device.
+* Status
+* Brilho
 
 ---
 
-# Relacionamentos
+## Sensor
+
+Representa um sensor.
+
+Herda de Device.
+
+Possui:
+
+* Temperatura
+* Unidade de medida
+
+---
+
+# 7. Relacionamentos
 
 ## Agregação
 
 Uma SmartHome possui vários Rooms.
 
 Um Room possui vários Devices.
+
+---
 
 ## Herança
 
@@ -69,17 +169,7 @@ Sensor é um Device.
 
 ---
 
-# Trabalho 3 – API REST
-
-## Objetivo
-
-Implementar um serviço remoto sem utilizar sockets diretamente nem RMI.
-
-A comunicação cliente-servidor foi implementada através de uma API REST.
-
----
-
-# Arquitetura
+# 8. Arquitetura do Trabalho 3
 
 Cliente Python
 ↓
@@ -95,7 +185,25 @@ Smart Home
 
 ---
 
-# Endpoints Disponíveis
+# 9. Linguagens Utilizadas
+
+Servidor:
+
+C++
+
+Cliente 1:
+
+Python
+
+Cliente 2:
+
+JavaScript
+
+Assim atendemos ao requisito de possuir pelo menos duas linguagens diferentes da linguagem utilizada pelo serviço.
+
+---
+
+# 10. Endpoints Disponíveis
 
 ## Verificar API
 
@@ -105,7 +213,7 @@ GET
 
 ---
 
-## Obter informações da casa
+## Informações da Casa
 
 GET
 
@@ -113,15 +221,15 @@ GET
 
 ---
 
-## Listar dispositivos
+## Listar Dispositivos
 
 GET
 
-/api/devices
+/ api/devices
 
 ---
 
-## Buscar dispositivo por ID
+## Buscar Dispositivo
 
 GET
 
@@ -129,7 +237,7 @@ GET
 
 ---
 
-## Ligar dispositivo
+## Ligar Dispositivo
 
 POST
 
@@ -137,7 +245,7 @@ POST
 
 ---
 
-## Desligar dispositivo
+## Desligar Dispositivo
 
 POST
 
@@ -145,7 +253,7 @@ POST
 
 ---
 
-## Alterar brilho da lâmpada
+## Alterar Brilho
 
 PUT
 
@@ -153,7 +261,7 @@ PUT
 
 ---
 
-## Consultar temperatura
+## Consultar Temperatura
 
 GET
 
@@ -161,67 +269,70 @@ GET
 
 ---
 
-# Clientes
+# 11. Como Demonstramos o Trabalho 3
 
-Foram implementados dois clientes:
+Um integrante executa o servidor.
 
-## Cliente Python
+Outro integrante executa os clientes.
 
-Realiza requisições HTTP para a API.
-
-## Cliente JavaScript
-
-Realiza requisições HTTP utilizando Node.js.
+Assim demonstramos a comunicação cliente-servidor solicitada pelo trabalho.
 
 ---
 
-# Trabalho 4 – Comunicação Indireta
+# 12. Trabalho 4 – Comunicação Indireta
 
-## Objetivo
+Neste trabalho evoluímos a arquitetura.
 
-Reduzir o acoplamento entre os componentes utilizando comunicação indireta.
+Escolhemos a opção:
 
-Foi escolhido o modelo Publish-Subscribe utilizando MQTT.
+Publish-Subscribe.
 
 ---
 
-# Arquitetura MQTT
+# 13. O que é Publish-Subscribe?
+
+Publish-Subscribe é um modelo onde produtores e consumidores não se comunicam diretamente.
+
+Existe um intermediário chamado Broker.
+
+O produtor publica mensagens.
+
+O Broker recebe as mensagens.
+
+Os consumidores recebem as mensagens do Broker.
+
+---
+
+# 14. Broker Utilizado
+
+Utilizamos o Mosquitto MQTT.
+
+O Mosquitto é responsável por:
+
+* Receber mensagens.
+* Armazenar sessões.
+* Distribuir eventos.
+* Encaminhar mensagens aos assinantes.
+
+---
+
+# 15. Arquitetura MQTT
 
 Publicador
 ↓
 Broker MQTT (Mosquitto)
 ↓
-Assinantes
-
-O publicador não conhece os consumidores.
-
-Os consumidores não conhecem o publicador.
-
-Toda comunicação ocorre através do Broker.
+Subscriber
 
 ---
 
-# Componentes
+# 16. O que é MQTT?
 
-## Broker
+MQTT é um protocolo leve muito utilizado em IoT.
 
-Mosquitto MQTT.
+Ele trabalha com tópicos.
 
-Responsável por receber e distribuir mensagens.
-
-## Publicador
-
-Atualmente utilizamos um simulador MQTT.
-
-Futuramente será substituído por uma ESP32 com sensores reais.
-
-## Assinante
-
-Consome os dados publicados nos tópicos MQTT.
-
----
-
-# Tópicos Utilizados
+Exemplos:
 
 smartHome/temperature
 
@@ -229,54 +340,97 @@ smartHome/light
 
 ---
 
-# Dados Publicados
+# 17. Publicador
 
-Temperatura
+O publicador gera eventos de sensores.
 
-Luminosidade
+Atualmente utilizamos:
 
----
-
-# Desacoplamento Espacial
-
-O publicador envia mensagens para o Broker sem conhecer os consumidores.
-
-Os consumidores recebem mensagens sem conhecer o publicador.
+simulator/mqtt_sensor_simulator.py
 
 ---
 
-# Integração com Hardware
+# 18. Por que não utilizamos a ESP32 na apresentação?
 
-Foi preparada uma integração utilizando ESP32.
+Durante os testes finais tivemos problemas com a placa ESP32.
 
-Para a demonstração utilizamos um simulador MQTT publicando exatamente nos mesmos tópicos que serão utilizados pelo hardware.
+Para não comprometer a demonstração, utilizamos um simulador MQTT.
 
-A ESP32 será responsável por:
+O simulador publica exatamente os mesmos tipos de dados que seriam enviados pela ESP32.
 
-* Ler temperatura
-* Ler luminosidade
-* Publicar dados MQTT
+A arquitetura distribuída permanece a mesma.
 
----
-
-# Demonstração
-
-Primeiro executamos a API REST.
-
-Em seguida demonstramos os clientes Python e JavaScript acessando os endpoints.
-
-Depois iniciamos o Broker MQTT.
-
-Por fim executamos o simulador MQTT publicando valores de temperatura e luminosidade em tempo real.
-
-Os dados são recebidos pelo subscriber através dos tópicos MQTT.
+A única diferença é a origem dos dados.
 
 ---
 
-# Conclusão
+# 19. De Onde Vêm os Valores?
 
-O Trabalho 3 demonstrou comunicação cliente-servidor através de API REST.
+Os valores são gerados pelo simulador MQTT.
 
-O Trabalho 4 evoluiu a arquitetura para comunicação indireta utilizando Publish-Subscribe com MQTT.
+Exemplo:
 
-A utilização do Broker eliminou a necessidade de comunicação direta entre produtores e consumidores, reduzindo o acoplamento e aumentando a flexibilidade do sistema distribuído.
+Temperatura: 25.8 °C
+
+Luminosidade: 1398 lux
+
+Esses valores são publicados nos tópicos MQTT e consumidos pelos assinantes.
+
+---
+
+# 20. Como a ESP32 Funcionaria?
+
+ESP32
+↓
+Leitura dos sensores
+↓
+Publicação MQTT
+↓
+Broker Mosquitto
+↓
+Subscribers
+
+O simulador substitui temporariamente apenas a etapa de leitura física.
+
+---
+
+# 21. Onde Está o Desacoplamento?
+
+O publicador não conhece os consumidores.
+
+Os consumidores não conhecem o publicador.
+
+Ambos conhecem apenas o Broker.
+
+Essa característica é chamada de desacoplamento espacial.
+
+---
+
+# 22. Como Demonstramos o Desacoplamento?
+
+Executamos:
+
+1. Subscriber MQTT.
+2. Publicador MQTT.
+
+As mensagens são recebidas normalmente.
+
+Depois encerramos o Subscriber.
+
+O Publicador continua funcionando.
+
+Isso demonstra que ele não depende diretamente dos consumidores.
+
+---
+
+# 23. O que o Broker Resolve?
+
+Sem Broker:
+
+Produtor → Consumidor
+
+Com Broker:
+
+Produtor → Broker → Consumidor
+
+O Broker reduz o acoplamento e facilita a escalabilidade.
