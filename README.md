@@ -250,6 +250,7 @@ Neste trabalho evoluímos a arquitetura.
 Escolhemos a opção:
 
 Publish-Subscribe.
+Com Publish-Subscribe, os sensores apenas publicam dados em tópicos MQTT e o Broker se responsabiliza por distribuir as mensagens aos assinantes. Dessa forma, novos consumidores podem ser adicionados sem alterar os sensores já existentes.
 
 ---
 
